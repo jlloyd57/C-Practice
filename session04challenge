@@ -1,13 +1,42 @@
-write a class Vec3d to make the following main work:
+//write a class Vec3d to make the following main work:
+#include <cmath>
+#include <iostream>
+using namespace std;
 
-int main(){
-	Ved3d a(1.0,2.0,3.0);
-	Vec3d b(2.0,1.5,-1.2);
-	Vec3d c = a+b;
-	Vec3d d = a *2;
-	Vec3d e = -a;
-	cout << a << endl;
-	cout << b << endl;
-	cout << c << endl;
-	cout << d << endl;
-	cout << e << endl;
+class Vec3d{
+private:
+    double x, y, z;
+public:
+    Vec3d(double x, double y, double z): x(x), y(y), z(z) {
+
+    }
+    friend ostream& operator <<(ostream& s, Vec3d v) {
+        s << v.x << ", " << v.y << ", " << v.z;
+        return s; //if you print to a stream you return to the stream
+    }
+    friend Vec3d operator + (Vec3d v, Vec3d w) {
+        return Vec3d(v.x+w.x, v.y+w.y, v.z+w.z);
+    }
+    friend Vec3d operator * (Vec3d v, int scalar) {
+        return Vec3d(v.x * (float) scalar, v.y * (float)scalar , v.z *(float)scalar);
+
+    }
+    friend Vec3d operator - (Vec3d v){
+        return Vec3d(v.x*-1, v.y*-1, v.z*-1);
+    }
+};
+int main() {
+    //Write a class Vec3d to make the following main work:
+    const Vec3d a(1.0, 2.0, 3.0);
+    const Vec3d b(2.0, 1.5, -1.2);
+    const Vec3d c = a + b;
+    const Vec3d d = a * 2;
+    const Vec3d e = -a;
+    cout << a << '\n';
+    cout << b << '\n';
+    cout << c << '\n';
+    cout << d << '\n';
+    cout << e << '\n';
+}
+
+
