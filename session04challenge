@@ -1,0 +1,13 @@
+write a class Vec3d to make the following main work:
+
+int main(){
+	Ved3d a(1.0,2.0,3.0);
+	Vec3d b(2.0,1.5,-1.2);
+	Vec3d c = a+b;
+	Vec3d d = a *2;
+	Vec3d e = -a;
+	cout << a << endl;
+	cout << b << endl;
+	cout << c << endl;
+	cout << d << endl;
+	cout << e << endl;
