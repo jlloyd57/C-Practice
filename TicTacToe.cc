@@ -1,3 +1,6 @@
+//Co-authored by Jennifer Lloyd and Siva B. 
+
+
 #include <iostream>
 using namespace std;
 char matrix[3][3] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
@@ -131,22 +134,23 @@ void updateGrid(int num){
         cout << "Cannot overwrite. Enter another number" << endl;
         //keep counter same. shouldn't increment.
         counter = counter - 1;
-
-        //also keep symbol same because it is the same turn
-    }
-    else if((*(ptr+num) >=9) || (*(ptr+num) < 1)){
-        counter = 10;
-    }
-    else{
+        //keep symbol same because it is the same turn
+    }else{
         *(ptr +num) = symbol;
         system("clear");//clear the screen before re-drawing
+        //cout << *(ptr+num) << endl;
         drawMatrix();
-        changeSymbol();//only change symbol on a good turn
+        playerDidWin = checkForWin();
+        //add a check for win
+        //to prevent a message for next user's turn if game has ended
+        if((playerDidWin == false) && (counter <8)){
+            changeSymbol();//only change symbol on a good turn
+
+        } 
     }
-    
 }
 
-void changeSymbol(){
+void changeSymbol(){//have to stop it from outputting another player's turn even after game has ended
     if(symbol == symbols[0]){
         symbol = symbols[1];
         cout << "It's player " << symbol<< "'s turn" << endl; 
@@ -169,6 +173,7 @@ void announceWinner(){
     }
 }
 
+
 int main(){
     char a;
     drawMatrix();
@@ -180,30 +185,17 @@ int main(){
     //int counter = 0;//maybe declare this outside so it can be accessed from 
     //other functions
     while(!(playerDidWin == true) && (counter < 9)){
-        // printf("\033c"); //command to clear screen
-        playerPrompt();
+        
+        playerPrompt();//call the updateGrid, which calls changeSymbol
+        //therefore changeSymbol outputs the message of next player's turn
         //changeSymbol();put this func call in updategrid
         playerDidWin = checkForWin();//prevents from exiting the game before
         counter++;
+        //cout << counter << endl;
         
     }
-    //cout << counter << endl;
-   
-
+    announceWinner();
+    
     return 0;
 
 }
-
-/*
-
-TODO:
-
-1. DONE Add specifics (Player 1 and Player 2) to each number prompt
-2. DONE -Need to update exit code. Not working with checkForWin function
-3. Back button for history of grid?
-4. opengl?
-5. Overwriting message not showing because screen keeps clearing after showing message
-6. counter can increase to more than 9 in cases where player has
- entered numerous turns trying to overwrite an existing symbol
-
-*/
